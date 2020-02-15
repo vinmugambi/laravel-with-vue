@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use phpDocumentor\Reflection\Types\Nullable;
 
 class CreatePostImagesTable extends Migration
 {
@@ -15,6 +16,9 @@ class CreatePostImagesTable extends Migration
     {
         Schema::create('post_images', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('post_id')->unsigned();
+            $table->string('post_image_patch');
+            $table->string('post_image_caption')->nullable();
             $table->timestamps();
         });
     }
