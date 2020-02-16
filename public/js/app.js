@@ -3586,7 +3586,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'all-posts',
@@ -3746,10 +3745,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       $.each(this.imageList, function (key, image) {
         formData.append("images[".concat(key, "]"), image);
       });
-      api.post('/post/create_post', formData, {
+      console.log(formData);
+      fetch('http://127.0.0.1:8000/post/create_post', {
+        method: 'POST',
         headers: {
           'Content-Type': 'multipart/form-data'
-        }
+        },
+        body: formData
       }).then(function (res) {
         _this.title = _this.body = '';
         _this.status = true;
@@ -3763,8 +3765,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
          note: "that" has been assigned the value of "this" at the top
          to avoid context related issues.
          */
-
-        that.getAllPosts();
+        // that.getAllPosts();
       });
     },
     validateForm: function validateForm() {
@@ -100843,8 +100844,6 @@ var render = function() {
     "div",
     { staticClass: "row" },
     [
-      _c("h1", [_vm._v("Posts")]),
-      _vm._v(" "),
       _vm._l(_vm.posts, function(post, i) {
         return _c("div", { key: i, staticClass: "col-md-6" }, [
           _c("div", { staticClass: "card mt-4" }, [
@@ -114747,17 +114746,20 @@ var debug = "development" !== "production";
       return _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.t0 = commit;
-                _context.next = 3;
-                return fetch('http://localhost:8000/post/get_all');
+                _context.next = 2;
+                return fetch('http://127.0.0.1:8000/post/get_all').then(function (res) {
+                  return res.json();
+                });
 
-              case 3:
-                _context.t1 = _context.sent;
-                return _context.abrupt("return", (0, _context.t0)('setPosts', _context.t1));
+              case 2:
+                response = _context.sent;
+                console.log(response.data);
+                return _context.abrupt("return", commit('setPosts', response));
 
               case 5:
               case "end":
@@ -114770,7 +114772,7 @@ var debug = "development" !== "production";
   },
   mutations: {
     setPosts: function setPosts(state, response) {
-      state.posts = response.data.data;
+      state.posts = response.data;
     }
   },
   strict: debug

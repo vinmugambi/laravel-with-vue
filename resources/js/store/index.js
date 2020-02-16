@@ -11,12 +11,14 @@ export default new Vuex.Store({
     },
     actions: {
         async getAllPosts({commit}){
-            return commit('setPosts', await fetch('http://localhost:8000/post/get_all'));
+            let response = await fetch('http://127.0.0.1:8000/post/get_all').then(res=> res.json());
+            console.log(response.data)
+            return commit('setPosts', response);
         }
     },
     mutations: {
         setPosts(state, response){
-            state.posts=response.data.data;
+            state.posts=response.data;
         }
     },
     strict: debug
