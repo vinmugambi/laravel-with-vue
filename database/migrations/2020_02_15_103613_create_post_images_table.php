@@ -17,7 +17,7 @@ class CreatePostImagesTable extends Migration
         Schema::create('post_images', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('post_id')->unsigned();
-            $table->string('post_image_patch');
+            $table->string('post_image_path');
             $table->string('post_image_caption')->nullable();
             $table->timestamps();
         });
