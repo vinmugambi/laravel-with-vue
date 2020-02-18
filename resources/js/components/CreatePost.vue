@@ -66,6 +66,8 @@
 <script>
 import { setTimeout } from 'timers';
 import { mapState, mapActions } from 'vuex';
+import api from '../api';
+
 export default {
   name: 'create-post',
   props: ['posts'],
@@ -109,7 +111,7 @@ export default {
         formData.append(`images[${key}]`, image);
       });
       console.log(formData)
-      fetch('http://127.0.0.1:8000/post/create_post', {method: 'POST',headers: {'Content-Type': 'multipart/form-data'},body: formData})
+      api.post('/post/create_post', formData,{headers : {'Content-Type': 'multipart/form-data'}})
         .then((res) => {
           this.title = this.body = '';
           this.status = true;
