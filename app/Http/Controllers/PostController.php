@@ -34,7 +34,7 @@ class PostController extends Controller
 
             PostImage::create([
                 'post_image_caption' => $title,
-                'post_image_path'=> '/app/public/'.$imagePath,
+                'post_image_path'=> '/uploads/'.$imagePath,
                 'post_id'=>$post->id
             ]);
         }
