@@ -8,7 +8,7 @@
             {{ truncateText(post.body) }}
           </p>
         </div>
-        <button class="btn btn-success m-2" @click="viewPost(i)">View Post</button>
+        <button class="text-white bg-blue-500 p-2 rounded m-2" @click="viewPost(i)">View Post</button>
       </div>
     </div>
     <el-dialog v-if="currentPost" :visible.sync="postDialogVisible" width="40%">
@@ -16,7 +16,7 @@
         <h3>{{ currentPost.title }}</h3>
         <div class="row">
           <div class="col-md-6" v-for="(img, i) in currentPost.post_images" :key=i>
-            <img :src="img.post_image_path" class="img-thumbnail" alt="">
+            <img :src="img.post_image_path" class="object-scale-down h-48 w-full" height="160px">
           </div>
         </div>
         <hr>
