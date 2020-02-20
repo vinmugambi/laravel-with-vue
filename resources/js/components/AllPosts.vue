@@ -1,10 +1,16 @@
 <template>
   <div class="row">
-    <div class="col-md-6" v-for="(post, i) in posts" :key=i>
+    <div class="col-md-6" v-for="(post, i) in posts" :key="i">
       <div class="card mt-4">
-        <img v-if="post.post_images.length" class="card-img-top" :src="post.post_images[0].post_image_path">
+        <img
+          v-if="post.post_images.length"
+          class="card-img-top h-48 w-full"
+          :src="post.post_images[0].post_image_path"
+        />
         <div class="card-body">
-          <p class="card-text"><strong>{{ post.title }}</strong> <br>
+          <p class="card-text">
+            <strong>{{ post.title }}</strong>
+            <br />
             {{ truncateText(post.body) }}
           </p>
         </div>
@@ -15,11 +21,11 @@
       <span>
         <h3>{{ currentPost.title }}</h3>
         <div class="row">
-          <div class="col-md-6" v-for="(img, i) in currentPost.post_images" :key=i>
-            <img :src="img.post_image_path" class="object-scale-down h-48 w-full" height="160px">
+          <div class="col-md-6" v-for="(img, i) in currentPost.post_images" :key="i">
+            <img :src="img.post_image_path" class="object-scale-down " height="160px" />
           </div>
         </div>
-        <hr>
+        <hr />
         <p>{{ currentPost.body }}</p>
       </span>
       <span slot="footer" class="dialog-footer">
@@ -30,20 +36,20 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 export default {
-  name: 'all-posts',
+  name: "all-posts",
   data() {
     return {
       postDialogVisible: false,
-      currentPost: '',
+      currentPost: ""
     };
   },
   computed: {
-    ...mapState(['posts'])
+    ...mapState(["posts"])
   },
   beforeMount() {
-    this.$store.dispatch('getAllPosts');
+    this.$store.dispatch("getAllPosts");
   },
   methods: {
     truncateText(text) {
@@ -57,6 +63,12 @@ export default {
       this.currentPost = post;
       this.postDialogVisible = true;
     }
-  },
-}
+  }
+};
 </script>
+
+<style>
+.card-text{
+  @apply text-purple-700;
+}
+</style>
