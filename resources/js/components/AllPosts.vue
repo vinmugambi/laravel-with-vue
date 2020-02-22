@@ -10,28 +10,11 @@
         <div class="card-body">
           <p class="card-text">
             <strong>{{ post.title }}</strong>
-            <br />
-            {{ truncateText(post.body) }}
           </p>
         </div>
-        <button class="text-white bg-blue-500 p-2 rounded m-2" @click="viewPost(i)">View Post</button>
+        <a class="text-white bg-blue-500 p-2 rounded m-2" :href="'/post/'+post.id">View Post</a>
       </div>
     </div>
-    <el-dialog v-if="currentPost" :visible.sync="postDialogVisible" width="40%">
-      <span>
-        <h3>{{ currentPost.title }}</h3>
-        <div class="row">
-          <div class="col-md-6" v-for="(img, i) in currentPost.post_images" :key="i">
-            <img :src="img.post_image_path" class="object-scale-down " height="160px" />
-          </div>
-        </div>
-        <hr />
-        <p>{{ currentPost.body }}</p>
-      </span>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="postDialogVisible = false">Okay</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
@@ -50,19 +33,6 @@ export default {
   },
   beforeMount() {
     this.$store.dispatch("getAllPosts");
-  },
-  methods: {
-    truncateText(text) {
-      if (text.length > 24) {
-        return `${text.substr(0, 24)}...`;
-      }
-      return text;
-    },
-    viewPost(postIndex) {
-      const post = this.posts[postIndex];
-      this.currentPost = post;
-      this.postDialogVisible = true;
-    }
   }
 };
 </script>
