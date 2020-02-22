@@ -1,93 +1,106 @@
 <template>
   <div class="card mt-4">
-      <div class="card-header">New Post</div>
-      <div class="card-body">
-        <div v-if=status_msg :class="{'alert-success': status, 'alert-danger': !status }" class="alert" role="alert">
-          {{ status_msg }}
+    <div class="card-header">New Post</div>
+    <div class="card-body">
+      <div
+        v-if="status_msg"
+        :class="{'alert-success': status, 'alert-danger': !status }"
+        class="alert"
+        role="alert"
+      >{{ status_msg }}</div>
+      <form>
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Title</label>
+          <input
+            v-model="title"
+            type="text"
+            class="form-control"
+            id="title"
+            placeholder="Post Title"
+            required
+          />
         </div>
-        <form>
-          <div class="form-group">
-            <label for="exampleFormControlInput1">Title</label>
-            <input v-model="title" type="text" class="form-control" id="title" placeholder="Post Title" required>
-          </div>
-          <div class="form-group">
-            <label for="exampleFormControlTextarea1">Post Content</label>
-            <textarea v-model="body" class="form-control" id="post-content" rows="3" required></textarea>
-          </div>
-          <div class="">
-            <el-upload
-              action="https://jsonplaceholder.typicode.com/posts/"
-              list-type="picture-card"
-              :on-preview="handlePictureCardPreview"
-              :on-change="updateImageList"
-              :auto-upload="false">
-              <i class="el-icon-plus"></i>
-            </el-upload>
-            <el-dialog :visible.sync="dialogVisible">
-              <img width="100%" :src="dialogImageUrl" alt="">
-            </el-dialog>
-          </div>
-        </form>
-      </div>
-      <div class="card-footer">
-        <button type="button" @click="createPost" class="btn btn-success">
-          {{ isCreatingPost ? 'Posting...' : 'Create Post' }}
-        </button>
-      </div>
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">Post Content </label>
+          <textarea v-model="body" class="form-control" id="post-content" rows="3" required
+          placeholder="Write your post in mark down"></textarea>
+        </div>
+        <div class>
+          <el-upload
+            action="https://jsonplaceholder.typicode.com/posts/"
+            list-type="picture-card"
+            :on-preview="handlePictureCardPreview"
+            :on-change="updateImageList"
+            :auto-upload="false"
+          >
+            <i class="el-icon-plus"></i>
+          </el-upload>
+          <el-dialog :visible.sync="dialogVisible">
+            <img width="100%" :src="dialogImageUrl" alt />
+          </el-dialog>
+        </div>
+      </form>
+    </div>
+    <div class="card-footer">
+      <button
+        type="button"
+        @click="createPost"
+        class="btn btn-success"
+      >{{ isCreatingPost ? 'Posting...' : 'Create Post' }}</button>
+    </div>
   </div>
 </template>
 
 <style>
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-  .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
 </style>
 
 <script>
-import { setTimeout } from 'timers';
-import { mapState, mapActions } from 'vuex';
-import api from '../api';
+import { setTimeout } from "timers";
+import { mapState, mapActions } from "vuex";
+import api from "../api";
 
 export default {
-  name: 'create-post',
-  props: ['posts'],
+  name: "create-post",
+  props: ["posts"],
   data() {
     return {
-      dialogImageUrl: '',
+      dialogImageUrl: "",
       dialogVisible: false,
       imageList: [],
-      status_msg: '',
-      status: '',
+      status_msg: "",
+      status: "",
       isCreatingPost: false,
-      title: '',
-      body: '',
+      title: "",
+      body: ""
     };
   },
   computed: {
-    ...mapActions(['getAllPosts']),
+    ...mapActions(["getAllPosts"])
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     updateImageList(file) {
       this.imageList.push(file.raw);
@@ -105,17 +118,20 @@ export default {
       const that = this;
       this.isCreatingPost = true;
       let formData = new FormData();
-      formData.append('title', this.title);
-      formData.append('body', this.body);
+      formData.append("title", this.title);
+      formData.append("body", this.body);
       $.each(this.imageList, function(key, image) {
         formData.append(`images[${key}]`, image);
       });
-      console.log(formData)
-      api.post('/post/create_post', formData,{headers : {'Content-Type': 'multipart/form-data'}})
-        .then((res) => {
-          this.title = this.body = '';
+      console.log(formData);
+      api
+        .post("/post/create_post", formData, {
+          headers: { "Content-Type": "multipart/form-data" }
+        })
+        .then(res => {
+          this.title = this.body = "";
           this.status = true;
-          this.showNotificaiton('Post Successfully Created');
+          this.showNotificaiton("Post Successfully Created");
           this.isCreatingPost = false;
           this.imageList = [];
           /*
@@ -129,12 +145,12 @@ export default {
     validateForm() {
       if (!this.title) {
         this.status = false;
-        this.showNotificaiton('Post title cannot be empty');
+        this.showNotificaiton("Post title cannot be empty");
         return false;
       }
       if (!this.body) {
         this.status = false;
-        this.showNotification('Post body cannot be empty');
+        this.showNotification("Post body cannot be empty");
         return false;
       }
       return true;
@@ -142,9 +158,9 @@ export default {
     showNotificaiton(message) {
       this.status_msg = message;
       setTimeout(() => {
-        this.status_msg = '';
+        this.status_msg = "";
       }, 3000);
     }
-  },
+  }
 };
 </script>

@@ -10,16 +10,12 @@
             <all-posts />
         </div> --}}
         <h1 class="text-4xl">{{$post->title}}</h1>
-        @php
-           $parseDown= new \ParseDown();
-            echo parseDown("##I am heading two");
-        @endphp
+        <div class="markdown">
+            {!! (new Parsedown)->text($post->body) !!}
+        </div>
         @if (count($post->post_images) > 0)
         <img src="{{$post->post_images[0]->post_image_path}}" alt="{{$post->post_images[0]->post_image_caption}}">
         @endif
-        <p class="block">
-            {{$post->body}}
-        </p>
     </div>
 </div>
 @endsection

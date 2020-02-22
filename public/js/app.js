@@ -3575,23 +3575,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "all-posts",
@@ -3604,20 +3587,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["posts"])),
   beforeMount: function beforeMount() {
     this.$store.dispatch("getAllPosts");
-  },
-  methods: {
-    truncateText: function truncateText(text) {
-      if (text.length > 24) {
-        return "".concat(text.substr(0, 24), "...");
-      }
-
-      return text;
-    },
-    viewPost: function viewPost(postIndex) {
-      var post = this.posts[postIndex];
-      this.currentPost = post;
-      this.postDialogVisible = true;
-    }
   }
 });
 
@@ -3707,25 +3676,39 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'create-post',
-  props: ['posts'],
+  name: "create-post",
+  props: ["posts"],
   data: function data() {
     return {
-      dialogImageUrl: '',
+      dialogImageUrl: "",
       dialogVisible: false,
       imageList: [],
-      status_msg: '',
-      status: '',
+      status_msg: "",
+      status: "",
       isCreatingPost: false,
-      title: '',
-      body: ''
+      title: "",
+      body: ""
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['getAllPosts'])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(["getAllPosts"])),
   mounted: function mounted() {},
   methods: {
     updateImageList: function updateImageList(file) {
@@ -3748,21 +3731,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var that = this;
       this.isCreatingPost = true;
       var formData = new FormData();
-      formData.append('title', this.title);
-      formData.append('body', this.body);
+      formData.append("title", this.title);
+      formData.append("body", this.body);
       $.each(this.imageList, function (key, image) {
         formData.append("images[".concat(key, "]"), image);
       });
       console.log(formData);
-      _api__WEBPACK_IMPORTED_MODULE_2__["default"].post('/post/create_post', formData, {
+      _api__WEBPACK_IMPORTED_MODULE_2__["default"].post("/post/create_post", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          "Content-Type": "multipart/form-data"
         }
       }).then(function (res) {
-        _this.title = _this.body = '';
+        _this.title = _this.body = "";
         _this.status = true;
 
-        _this.showNotificaiton('Post Successfully Created');
+        _this.showNotificaiton("Post Successfully Created");
 
         _this.isCreatingPost = false;
         _this.imageList = [];
@@ -3777,13 +3760,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     validateForm: function validateForm() {
       if (!this.title) {
         this.status = false;
-        this.showNotificaiton('Post title cannot be empty');
+        this.showNotificaiton("Post title cannot be empty");
         return false;
       }
 
       if (!this.body) {
         this.status = false;
-        this.showNotification('Post body cannot be empty');
+        this.showNotification("Post body cannot be empty");
         return false;
       }
 
@@ -3794,7 +3777,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.status_msg = message;
       Object(timers__WEBPACK_IMPORTED_MODULE_0__["setTimeout"])(function () {
-        _this2.status_msg = '';
+        _this2.status_msg = "";
       }, 3000);
     }
   }
@@ -10220,7 +10203,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".card-text{\n  color: #6b46c1;\n}\r\n", ""]);
+exports.push([module.i, ".card-text{\n  color: #6b46c1;\n}\n", ""]);
 
 // exports
 
@@ -10239,7 +10222,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".avatar-uploader .el-upload {\n  border: 1px dashed #d9d9d9;\n  border-radius: 6px;\n  cursor: pointer;\n  position: relative;\n  overflow: hidden;\n}\n.avatar-uploader .el-upload:hover {\n  border-color: #409EFF;\n}\n.avatar-uploader-icon {\n  font-size: 28px;\n  color: #8c939d;\n  width: 178px;\n  height: 178px;\n  line-height: 178px;\n  text-align: center;\n}\n.avatar {\n  width: 178px;\n  height: 178px;\n  display: block;\n}\n", ""]);
+exports.push([module.i, ".avatar-uploader .el-upload {\n  border: 1px dashed #d9d9d9;\n  border-radius: 6px;\n  cursor: pointer;\n  position: relative;\n  overflow: hidden;\n}\n.avatar-uploader .el-upload:hover {\n  border-color: #409eff;\n}\n.avatar-uploader-icon {\n  font-size: 28px;\n  color: #8c939d;\n  width: 178px;\n  height: 178px;\n  line-height: 178px;\n  text-align: center;\n}\n.avatar {\n  width: 178px;\n  height: 178px;\n  display: block;\n}\n", ""]);
 
 // exports
 
@@ -100898,108 +100881,34 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "row" },
-    [
-      _vm._l(_vm.posts, function(post, i) {
-        return _c("div", { key: i, staticClass: "col-md-6" }, [
-          _c("div", { staticClass: "card mt-4" }, [
-            post.post_images.length
-              ? _c("img", {
-                  staticClass: "card-img-top h-48 w-full",
-                  attrs: { src: post.post_images[0].post_image_path }
-                })
-              : _vm._e(),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c("p", { staticClass: "card-text" }, [
-                _c("strong", [_vm._v(_vm._s(post.title))]),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(
-                  "\n          " +
-                    _vm._s(_vm.truncateText(post.body)) +
-                    "\n        "
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "text-white bg-blue-500 p-2 rounded m-2",
-                on: {
-                  click: function($event) {
-                    return _vm.viewPost(i)
-                  }
-                }
-              },
-              [_vm._v("View Post")]
-            )
-          ])
-        ])
-      }),
-      _vm._v(" "),
-      _vm.currentPost
-        ? _c(
-            "el-dialog",
+    _vm._l(_vm.posts, function(post, i) {
+      return _c("div", { key: i, staticClass: "col-md-6" }, [
+        _c("div", { staticClass: "card mt-4" }, [
+          post.post_images.length
+            ? _c("img", {
+                staticClass: "card-img-top h-48 w-full",
+                attrs: { src: post.post_images[0].post_image_path }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("p", { staticClass: "card-text" }, [
+              _c("strong", [_vm._v(_vm._s(post.title))])
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "a",
             {
-              attrs: { visible: _vm.postDialogVisible, width: "40%" },
-              on: {
-                "update:visible": function($event) {
-                  _vm.postDialogVisible = $event
-                }
-              }
+              staticClass: "text-white bg-blue-500 p-2 rounded m-2",
+              attrs: { href: "/post/" + post.id }
             },
-            [
-              _c("span", [
-                _c("h3", [_vm._v(_vm._s(_vm.currentPost.title))]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "row" },
-                  _vm._l(_vm.currentPost.post_images, function(img, i) {
-                    return _c("div", { key: i, staticClass: "col-md-6" }, [
-                      _c("img", {
-                        staticClass: "object-scale-down ",
-                        attrs: { src: img.post_image_path, height: "160px" }
-                      })
-                    ])
-                  }),
-                  0
-                ),
-                _vm._v(" "),
-                _c("hr"),
-                _vm._v(" "),
-                _c("p", [_vm._v(_vm._s(_vm.currentPost.body))])
-              ]),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  staticClass: "dialog-footer",
-                  attrs: { slot: "footer" },
-                  slot: "footer"
-                },
-                [
-                  _c(
-                    "el-button",
-                    {
-                      attrs: { type: "primary" },
-                      on: {
-                        click: function($event) {
-                          _vm.postDialogVisible = false
-                        }
-                      }
-                    },
-                    [_vm._v("Okay")]
-                  )
-                ],
-                1
-              )
-            ]
+            [_vm._v("View Post")]
           )
-        : _vm._e()
-    ],
-    2
+        ])
+      ])
+    }),
+    0
   )
 }
 var staticRenderFns = []
@@ -101039,7 +100948,7 @@ var render = function() {
               },
               attrs: { role: "alert" }
             },
-            [_vm._v("\n        " + _vm._s(_vm.status_msg) + "\n      ")]
+            [_vm._v(_vm._s(_vm.status_msg))]
           )
         : _vm._e(),
       _vm._v(" "),
@@ -101079,7 +100988,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
           _c("label", { attrs: { for: "exampleFormControlTextarea1" } }, [
-            _vm._v("Post Content")
+            _vm._v("Post Content ")
           ]),
           _vm._v(" "),
           _c("textarea", {
@@ -101092,7 +101001,12 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { id: "post-content", rows: "3", required: "" },
+            attrs: {
+              id: "post-content",
+              rows: "3",
+              required: "",
+              placeholder: "Write your post in mark down"
+            },
             domProps: { value: _vm.body },
             on: {
               input: function($event) {
@@ -101153,13 +101067,7 @@ var render = function() {
           attrs: { type: "button" },
           on: { click: _vm.createPost }
         },
-        [
-          _vm._v(
-            "\n        " +
-              _vm._s(_vm.isCreatingPost ? "Posting..." : "Create Post") +
-              "\n      "
-          )
-        ]
+        [_vm._v(_vm._s(_vm.isCreatingPost ? "Posting..." : "Create Post"))]
       )
     ])
   ])
@@ -114888,8 +114796,8 @@ var debug = "development" !== "production";
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Austin\Music\multi_upload\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Austin\Music\multi_upload\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/vincent/Music/learn/laravel-with-vue/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/vincent/Music/learn/laravel-with-vue/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

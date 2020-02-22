@@ -10,10 +10,6 @@ class Post extends Model
 {
     protected $fillable = ['title', 'body', 'user_id'];
 
-    public static function getTextAttribute($value){
-        return new HtmlString(app(Parsedown::class)->setSafeMode(true)->text($value));
-    }
-
     public function author()
     {
         return $this->belongsTo('App\User');

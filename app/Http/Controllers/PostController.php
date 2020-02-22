@@ -34,11 +34,18 @@ class PostController extends Controller
 
             PostImage::create([
                 'post_image_caption' => $title,
-                'post_image_path'=> '/uploads/'.$imagePath,
-                'post_id'=>$post->id
+                'post_image_path' => '/uploads/' . $imagePath,
+                'post_id' => $post->id
             ]);
         }
 
-        return response()->json(['error'=> false, 'data'=>$post]);
+        return response()->json(['error' => false, 'data' => $post]);
+    }
+
+    public function getPost(Request $request, $id)
+    {
+        $post = Post::find($id);
+        // $post["body"] = Post::getTextAttribute($post->body);
+        return view('post.single', compact('post'));
     }
 }
