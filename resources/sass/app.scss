@@ -12,3 +12,9 @@
 @tailwind components;
 
 @tailwind utilities;
+
+.markdown {
+   h3{
+       @apply text-2xl my-1;
+   } 
+}
