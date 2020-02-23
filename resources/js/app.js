@@ -4,15 +4,15 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+// require('./bootstrap');
 
 window.Vue = require('vue');
 
 import store from './store/index';
-import ElementUI from  'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+// import ElementUI from  'element-ui';
+// import 'element-ui/lib/theme-chalk/index.css';
 
-Vue.use(ElementUI);
+// Vue.use(ElementUI);
 
 /**
  * The following block of code may be used to automatically register your
